@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <Math.h>
+#include <stdbool.h>
 #include "hash_table.h"
 #include "prime.h"
 #define debug 0
@@ -168,6 +169,14 @@ char* ht_get(ht_hash_table* ht, const char* key) {
     current_item = ht->items[index];
   }
   return NULL;
+}
+
+bool ht_isEmpty(ht_hash_table* ht) {
+  return ht->size == 0 ? true : false;
+}
+
+int ht_size(ht_hash_table* ht) {
+  return ht->size;
 }
 
 int main() {
