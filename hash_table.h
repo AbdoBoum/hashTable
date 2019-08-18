@@ -25,12 +25,12 @@ typedef struct {
 ht_hash_table* ht_new(void);
 void ht_del_hash_table(ht_hash_table*);
 
-void ht_insert(ht_hash_table*, const char*, const char*);
-void ht_insert_item(ht_hash_table*, ht_item*);
-char* ht_get(ht_hash_table*, const char*);
-void ht_delete(ht_hash_table*, const char*);
-bool ht_isEmpty(ht_hash_table*);
+void ht_insert(ht_hash_table*, const char*, const char*); //
+void ht_insert_item(ht_hash_table*, ht_item*); //
+char* ht_get(ht_hash_table*, const char*); //
+void ht_delete(ht_hash_table*, const char*); //
+bool ht_isEmpty(ht_hash_table*); //
 bool ht_containsKey(ht_hash_table*, const char*);
-int ht_size(ht_hash_table*);
+int ht_size(ht_hash_table*); //
 void ht_replace(ht_hash_table*, const char*, const char*);
 #endif

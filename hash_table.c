@@ -1,11 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <Math.h>
+#include <math.h>
 #include <stdbool.h>
 #include "hash_table.h"
 #include "prime.h"
 #define debug 0
+
 static ht_item HT_DELETED_ITEM = {NULL, NULL};
 
 static int hash(const char* s, const int a, const int m) {
@@ -127,7 +128,7 @@ void ht_delete(ht_hash_table* ht, const char* key) {
   return;
 }
 
-void ht_insert_item (ht_hash_table* ht, ht_item* item) {
+void ht_insert_item (ht_hash_table* ht, ht_item* item) { /* insert or replace */
   if (debug) {printf("In ht_insert_item\n");}
   const int load = ht->count * 100 / ht->size;
   if (load > 70) {
@@ -171,6 +172,46 @@ char* ht_get(ht_hash_table* ht, const char* key) {
   return NULL;
 }
 
+bool ht_containsKey(ht_hash_table* ht, const char* key) {
+  if (debug) {printf("In ht_containsKey\n");}
+  int index = get_hash(key, ht->size, 0);
+  ht_item* current_item = ht->items[index];
+  int i = 1;
+  while(current_item != NULL) {
+    if (current_item != &HT_DELETED_ITEM) {
+      if (strcmp(key, current_item->key) == 0) {
+        if (debug) {printf("In ht_containsKey\n");}
+        return true;
+      }
+    }
+    index = get_hash(key, ht->size, i++);
+    current_item = ht->items[index];
+  }
+  if (debug) {printf("In ht_containsKey\n");}
+  return false;
+}
+
+void ht_replace(ht_hash_table* ht, const char* k, const char* v) {
+    if (debug) {printf("In ht_replace\n");}
+    int index = get_hash(k, ht->size, 0);
+    ht_item* current_item = ht->items[index];
+    int i = 1;
+    while (current_item != NULL) {
+      if (current_item != &HT_DELETED_ITEM) {
+        if (strcmp(current_item->key, k) == 0) {
+          ht_item* item = ht_new_item(current_item->key, v);
+          ht_del_item(current_item);
+          ht->items[index] = item;
+          return;
+        }
+      }
+      index = get_hash(k, ht->size, i++);
+      current_item = ht->items[index];
+    }
+    if (debug) {printf("Out ht_replace\n");}
+    return;
+}
+
 bool ht_isEmpty(ht_hash_table* ht) {
   return ht->size == 0 ? true : false;
 }
@@ -184,9 +225,14 @@ int main() {
   ht_insert(table, "cat", "animal");
   ht_insert(table, "dog", "hanibal");
   ht_insert(table, "lion", "tanibal");
-  printf("%s\n", ht_get(table, "cat"));
+  printf("get: %s\n", ht_get(table, "cat"));
+  printf("containsKey %d\n", ht_containsKey(table, "cat"));
+  ht_replace(table, "cat", "canibal");
+  printf("get: %s\n", ht_get(table, "cat"));
   ht_delete(table, "cat");
-  printf("%s\n", ht_get(table, "cat"));
+  printf("get: %s\n", ht_get(table, "cat"));
+  printf("containsKey: %d\n", ht_containsKey(table, "cat"));
   printf("%d\n", table->count);
+  printf("isEmpty: %u\n", ht_isEmpty(table));
   return 0;
 }
