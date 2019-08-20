@@ -51,7 +51,14 @@ function hash(String string, int a, int size):
 
 We take hash % size to reduce the size of the integer to the fixed range. When 2 differents key lead to a same index, it causes a collision. So we must deal with those collisions. In our case we will use [Double hashing](https://www.geeksforgeeks.org/double-hashing/) to calculate the new index. There is other solution to deal with collisions: 
 
-- [Separate chaining](https://www.geeksforgeeks.org/hashing-set-2-separate-chaining/) : each bucket contains a linked list. When items collide, they are added to the list.
+- [Separate chaining](https://www.geeksforgeeks.org/hashing-set-2-separate-chaining/) : each bucket contains a linked list. When items collide, they are added to the list. If we would use separate chaining our structure to store the key-value pair will be: 
+```
+typedef struct ht_item{
+   char* key;
+   char* value;
+   ht_item* next_item;
+ } ht_item;
+```
 - [Linear probing](https://www.geeksforgeeks.org/hashing-set-3-open-addressing/): When a collision happen, we continue incrementing the index by 1 until we found an empty bucket to store our item.
 - [Quadratic  probing](https://www.geeksforgeeks.org/hashing-set-3-open-addressing/): When a collision happen, we continue incrementing the index by i² until we found an empty bucket to store our item. i = 0,1,...
 - Double hashing : We'll make use of a second hash function which should not return 0. Double hashing is a common method of collision management in production hash tables. ``` index = (hash_a(string) + i * (hash_b(string) + 1)) % num_buckets ```.
