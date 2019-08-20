@@ -1,7 +1,7 @@
-# Implementation of a hashTable
+# Implementation of a HashTable
 
-### Hash Table 
-is a key -> value lookup. We can think of it as an array of "buckets", each of which  store a key-value pairs. To locate the "bucket" where a key-value pair is stored, the key is passed throught a **hashing function** which returns ans integers which represents the index of the pairs in the array of "buckets".
+### HashTable 
+A HashTable is a key -> value lookup. We can think of it as an array of "buckets", each of which  store a key-value pairs. To locate the "bucket" where a key-value pair is stored, the key is passed throught a **hashing function** which returns ans integers which represents the index of the pairs in the array of "buckets".
 
 ### Functions
 - ht_hash_table* ht_new(void): It creates an empty hash table having the initial default capacity.
